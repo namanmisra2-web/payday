@@ -1,4 +1,4 @@
-/* Northbridge Lending — demo landing page
+/* USA Lendings — demo landing page
    Nothing here talks to a server. Submitting logs a payload to the console only. */
 
 /* ---------------- Mobile navigation ---------------- */
@@ -254,7 +254,7 @@ document.getElementById('dob').max = new Date().toISOString().split('T')[0];
 const successBox = document.getElementById('successMessage');
 const submitBtn = document.getElementById('submitBtn');
 
-form.addEventListener('submit', e => {
+form.addEventListener('submit', async e => {
     e.preventDefault();
     if (!validateStep(3)) return;
 
@@ -273,24 +273,34 @@ form.addEventListener('submit', e => {
         accountNumber: accountInput.value
     };
 
-    // Demo only — a real application would POST this over TLS to a server that
-    // stores account details encrypted. Never log this in production.
-    console.log('Application payload (demo):', data);
+    try {
+        const response = await fetch('submit.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
 
-    setTimeout(() => {
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+            throw new Error(result.message || 'Submission failed.');
+        }
+
         document.getElementById('successName').textContent = data.firstName;
         document.getElementById('successAmount').textContent = usd(data.loanAmount);
         document.getElementById('successRef').textContent =
-            'NB-' + String(Math.floor(Math.random() * 900000) + 100000);
+            'USA-' + String(Math.floor(Math.random() * 900000) + 100000);
 
         form.hidden = true;
         document.querySelector('.progress').hidden = true;
         successBox.hidden = false;
         successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
+    } catch (err) {
+        alert(err.message || 'Something went wrong while submitting the form.');
+    } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Submit application';
-    }, 900);
+    }
 });
 
 document.getElementById('startOver').addEventListener('click', () => {

@@ -101,6 +101,12 @@ img { display: block; max-width: 100%; height: auto; }
     display: inline-flex; align-items: center; gap: 10px;
     font-weight: 700; font-size: 1.12rem; letter-spacing: -.02em;
 }
+.logo img {
+    display: block;
+    height: 54px;
+    width: auto;
+    max-width: 100%;
+}
 .logo-mark {
     display: grid; place-items: center;
     width: 30px; height: 30px;
@@ -460,7 +466,7 @@ input[type="range"]::-moz-range-thumb {
     position: absolute; left: 14px;
     font-weight: 600; color: var(--ink-3); pointer-events: none;
 }
-.input-affix .affix + input { padding-left: 30px; }
+.field .input-affix .affix + input { padding-left: 32px; }
 
 .reveal-btn {
     position: absolute; right: 8px;
@@ -665,6 +671,10 @@ input[type="range"]::-moz-range-thumb {
     .field input[type="email"],
     .field input[type="date"],
     .field input[type="password"] { font-size: 16px; padding: 12px 13px; }
+
+    /* keep the digits clear of the $ prefix and the Show button */
+    .field .input-affix .affix + input { padding-left: 30px; }
+    .field .input-affix.reveal input { padding-right: 60px; }
 
     .rates-inner .cards { grid-template-columns: 1fr; }
     .card, .step, .quote { padding: 22px 20px; }
