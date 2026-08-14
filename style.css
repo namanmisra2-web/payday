@@ -91,23 +91,25 @@ img { display: block; max-width: 100%; height: auto; }
 /* ---------- Navbar ---------- */
 .navbar {
     position: sticky; top: 0; z-index: 50;
-    background: rgba(255, 255, 255, .82);
-    backdrop-filter: blur(12px);
+    background: #ffffff;
     border-bottom: 1px solid var(--line);
 }
-.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; gap: 24px; }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 80px; gap: 24px; }
+
 
 .logo {
     display: inline-flex; align-items: center; gap: 10px;
     font-weight: 700; font-size: 1.12rem; letter-spacing: -.02em;
+    padding: 0;
 }
 .logo img {
     display: block;
-    height: 54px;
+    height: 80px;
     width: auto;
     max-width: 100%;
+    object-fit: contain;
 }
-.logo-mark {
+
     display: grid; place-items: center;
     width: 30px; height: 30px;
     border-radius: 9px;
@@ -383,6 +385,22 @@ input[type="range"]::-moz-range-thumb {
     font-size: .82rem; color: var(--ink-2);
 }
 .secure-note strong { color: var(--ink); }
+
+.loan-guarantee {
+    text-align: center;
+    background: linear-gradient(135deg, rgba(31, 111, 235, 0.08), rgba(18, 185, 129, 0.08));
+    border: 2px solid var(--brand);
+    border-radius: var(--radius-sm);
+    padding: 18px 16px;
+    margin-top: 24px;
+    margin-bottom: 20px;
+}
+.loan-guarantee p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+}
 
 /* Form shell */
 .form-wrapper {
