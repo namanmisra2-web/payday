@@ -107,16 +107,6 @@ function setError(id, message) {
 
 const digits = value => value.replace(/\D/g, '');
 
-function yearsSince(dateString) {
-    const dob = new Date(dateString);
-    if (Number.isNaN(dob.getTime())) return NaN;
-    const now = new Date();
-    let age = now.getFullYear() - dob.getFullYear();
-    const monthDiff = now.getMonth() - dob.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < dob.getDate())) age--;
-    return age;
-}
-
 /* ABA routing numbers use a weighted mod-10 checksum */
 function isValidRouting(value) {
     if (!/^\d{9}$/.test(value)) return false;
@@ -140,14 +130,6 @@ const validators = {
 
         const lastName = document.getElementById('lastName').value.trim();
         ok = setError('lastName', lastName.length < 2 ? 'Enter your last name.' : '') && ok;
-
-        const dob = document.getElementById('dob').value;
-        const age = yearsSince(dob);
-        let dobError = '';
-        if (!dob) dobError = 'Enter your date of birth.';
-        else if (Number.isNaN(age) || age < 18) dobError = 'You must be at least 18 years old to apply.';
-        else if (age > 120) dobError = 'Check the date of birth you entered.';
-        ok = setError('dob', dobError) && ok;
 
         const phone = digits(document.getElementById('phone').value);
         ok = setError('phone', phone.length !== 10 ? 'Enter a 10-digit phone number.' : '') && ok;
@@ -247,9 +229,6 @@ revealBtn.addEventListener('click', () => {
     accountInput.focus();
 });
 
-/* Cap the date picker at today so future birthdays can't be chosen */
-document.getElementById('dob').max = new Date().toISOString().split('T')[0];
-
 /* ---------------- Submit ---------------- */
 const successBox = document.getElementById('successMessage');
 const submitBtn = document.getElementById('submitBtn');
@@ -265,7 +244,6 @@ form.addEventListener('submit', async e => {
         loanAmount: Number(digits(loanAmountInput.value)),
         firstName: document.getElementById('firstName').value.trim(),
         lastName: document.getElementById('lastName').value.trim(),
-        dateOfBirth: document.getElementById('dob').value,
         phone: digits(phoneInput.value),
         email: document.getElementById('email').value.trim(),
         bankName: document.getElementById('bankName').value.trim(),
